@@ -1,0 +1,138 @@
+[[Category:Installation process (Ελληνικά)]]
+[[Category:About Arch (Ελληνικά)]]
+[[ar:Installation guide]]
+[[bg:Installation guide]]
+[[bs:Installation guide]]
+[[cs:Installation guide]]
+[[da:Installation guide]]
+[[de:Arch Install Scripts]]
+[[en:Installation guide]]
+[[es:Installation guide]]
+[[fa:راهنمای تازه‌کاران]]
+[[fi:Installation guide]]
+[[fr:Arch install scripts]]
+[[hr:Installation guide]]
+[[hu:Installation guide]]
+[[id:Installation guide]]
+[[it:Installation guide]]
+[[ja:インストールガイド]]
+[[ko:Installation guide]]
+[[lt:Installation guide]]
+[[nl:Installation guide]]
+[[pl:Installation guide]]
+[[pt:Installation guide]]
+[[ru:Installation guide]]
+[[sk:Installation guide]]
+[[sr:Installation guide]]
+[[sv:Installation guide]]
+[[th:Installation guide]]
+[[tr:Installation guide]]
+[[uk:Installation guide]]
+[[zh-hans:Installation guide]]
+[[zh-hant:Installation guide]]
+{{Translateme (Ελληνικά)| Χρειάζεται επιμέλεια και αναβάθμιση}}
+
+Αυτό το άρθρο αποτελεί οδηγό για την εγκατάσταση του [[Arch Linux]] χρησιμοποιώντας το live σύστημα από ένα μέσο εγκατάστασης, φτιαγμένο από το επίσημο είδωλο εγκατάστασης. Για εναλλακτικούς τρόπους εγκατάστασης, δείτε [[:Category:Installation process]].
+
+Πριν την εγκατάσταση, προτείνεται να συμβουλευτείτε το [[FAQ]]. Για συνθήκες που χρησιμοποιούνται σε αυτόν τον οδηγό, δείτε [[Help:Reading]]. Πιο συγκεκριμένα, τα παραδείγματα κώδικα μπορεί να περίεχουν σύμβολα υποκατάστασης (μορφωποιημένα σε {{ic|''italics''}}) που πρέπει να αντικατασταθούν χειροκίνητα.
+
+Για πιο λεπτομερείς οδηγίες, δείτε τα αντίστοιχα [[ArchWiki]] άρθρα ή τα [[man page]] από τα διάφορα προγράμματα, και τα δύο συνδέονται από αυτόν τον οδηγό. Για πιο διαδραστική βοήθεια, [[IRC channel]] και [https://bbs.archlinux.org/ forums] είναι επίσης διαθέσιμα.
+
+Η διανομή Arch Linux θα πρέπει να τρέχει σε οποιαδήποτε [[Wikipedia:X86-64|x86_64]]-συμβατή συσκευή με ελάχιστη μνήμη RAM 530 MB. Μια βασική εγκατάσταση θα πρέπει να πιάνει λιγότερα από 2GB στον δίσκο. Καθώς η εγκατάσταση προχωράει χρειάζεται να ανακτήσει πακέτα από ε΄να απομακρυνσμένο αποθετήριο, αυτός ο οδηγός προυποθέτει οτι μια λειτουργική σύνδεση στο διαδυκτιο είναι διαθέσιμη.
+
+== Λήψη ==
+Κατεβάστε το νέο Arch Linux ISO από τη [https://www.archlinux.org/download/ σελίδα λήψης].
+* Παρέχεται ένα iso αρχείο, το οποίο μπορεί να εκκινήσει σε ένα i686 και x86_64 live σύστημα για την εγκατάσταση του Arch Linux μέσω του διαδικτύου. Μέσα τα οποία περιέχουν το [core] αποθετήριο πλέον δεν παρέχονται.
+* Τα αρχεία iso είναι υπογεγραμμένα και προτείνεται να πιστοποιήσετε την υπογραφή τους πριν τη χρήση. Στο Arch Linux, αυτό μπορεί να γίνει χρησιμοποιώντας {{bc|pacman-key -v <iso-file>.sig}}
+* Το αρχείο iso μπορεί να καεί σε ένα CD, να προσαρτηθεί σαν ένα αρχείο ISO, ή να γραφτεί κατ' ευθείαν σε ένα USB stick χρησιμοποιώντας την {{ic|dd}}. Προορίζεται μόνο για νέες εγκαταστάσεις· ένα ήδη υπάρχον σύστημα Arch Linux μπορεί πάντα να ενημερωθεί με {{ic|pacman -Syu}}.
+
+== Γλώσσα πληκτρολογίου ==
+
+Για πολλές χώρες και τύπους πληκτρολογίων τα κατάλληλα keymaps είναι ήδη διαθέσιμα, και μία εντολή όπως η {{ic|loadkeys uk}} μπορεί να κάνει αυτό που θέλετε. Περισσότερα διαθέσιμα αρχεία keymap μπορούν να βρεθούν στο {{ic|/usr/share/kbd/keymaps/}} (μπορείτε να παραλέιψετε το μονοπάτι του keymap και την κατάληξη όταν χρησιμοποιείτε την εντολή {{ic|loadkeys}}).
+
+== Διαμόρφωση (Partition) δίσκων ==
+Δείτε το άρθρο [[partitioning]] για λεπτομέρειες.
+
+Αν θέλετε να δημιουργήσετε μια Στοίβα συσκευών αποθήκευσης (stacked block devices) όπως [[LVM]], [[LUKS]], ή [[RAID]], κάντε το τώρα.
+
+== Διαμόρφωση των partitions ==
+Δείτε [[Format_a_device#Step_2:_create_the_new_file_system|εδώ]]{{Broken section link}} για λεπτομέρειες.
+
+Αν χρησιμοποιείτε (U)EFI πολυ πιθανόν να χρειαστείτε κάποιο άλλο partition για να φιλοξενηθεί το UEFI System partition. Διαβάστε [[Unified_Extensible_Firmware_Interface#Create_an_UEFI_System_Partition_in_Linux|αυτό το άρθρο]]{{Broken section link}}.
+
+== Προσάρτηση των partitions ==
+Τώρα πρέπει να προσαρτήσουμε το root partition στο {{ic|/mnt}}. Θα πρέπει επίσης να δημιουργήσετε καταλόγους και να προσαρτήσετε όποια άλλα partitions φτιάξετε ({{ic|/mnt/boot}}, {{ic|/mnt/home}}, ...) αν θέλετε να εντοπιστούν από το {{ic|genfstab}}.
+
+== Σύνδεση στο internet ==
+Μία υπηρεσία DHCP είναι ήδη ενεργοποιημένη για όλες τις διαθέσιμες συσκευές. Αν κάποιος χρειάζεται να ορίσει μία στατική IP ή να χρησιμοποιήσει κάποιο εργαλείο όπως το [[Netctl]], θα πρέπει να σταματήσει την υπηρεσία dhcp πρώτα: {{ic|systemctl stop dhcpcd.service}}. Για περισσότερες πληροφορίες επισκεφτείτε το [[configuring network]].
+
+=== Ασύρματο ===
+Τρέξτε {{ic|iwctl}} για να διαμορφώσετε το ασύρματο δίκτυο. Για πληροφορίες δείτε το [[Wireless network configuration]] και το [[iwd]].
+
+== Εγκατάσταση βασικού συστήματος ==
+Πριν την εγκατάσταση, τροποποιήστε το {{ic|/etc/pacman.d/mirrorlist}} και αφαιρέστε το σύμβολο {{ic|#}} μπροστά από τους κοντινούς στην τοποθεσία σας διακομιστές (servers). Αυτό το αντίγραφο της mirrorlist θα εγκατασταθεί στο νέο σας σύστημα από το {{ic|pacstrap}}, οπότε αξίζει να το φτιάξετε σωστά.
+
+Χρησιμοποιώντας το [https://github.com/falconindy/arch-install-scripts/blob/master/pacstrap.in pacstrap] script εγκαθιστούμε το βασικό σύστημα. Το group πακέτο {{ic|base-devel}} παρά το ότι είναι προαιρετικό, θα πρέπει επίσης να εγκατασταθεί αν σχεδιάζετε να μεταγλωττίσετε κάποιο πρόγραμμα από το [[AUR]] ή αν χρησιμοποιήσετε το [[ABS]].
+
+ # pacstrap /mnt base base-devel
+
+Άλλα πακέτα μπορούν να εγκατασταθούν προσαρτώντας το όνομά τους στην παραπάνω εντολή (χωρισμένα με κενό), περιλαμβανομένου του bootloader αν θέλετε.
+
+== Εγκατάσταση του bootloader ==
+=== [[GRUB]] ===
+
+* Για BIOS:
+
+ # arch-chroot /mnt pacman -S grub-bios
+
+* Για EFI (σε σπάνιες περιπτώσεις θα χρειαστείτε το {{ic|grub-efi-i386}}):
+
+ # arch-chroot /mnt pacman -S grub-efi-x86_64
+
+* Εγκατάσταση του GRUB μετά το chrooting (αναφερθείτε στο τμήμα [[#Ενημέρωση συστήματος|Διαμόρφωση συστήματος]]).
+
+=== [[Syslinux]] ===
+
+ # arch-chroot /mnt pacman -S syslinux
+
+== Διαμόρφωση συστήματος ==
+Δημιουργήστε το [[fstab]] με την εξής εντολή (αν προτιμάτε να χρησιμοποιήσετε UUIDs ή labels, προσθέστε την επιλογή {{ic|-U}} ή {{ic|-L}}, αντίστοιχα):
+ # genfstab -p /mnt >> /mnt/etc/fstab
+Έπειτα κάνουμε [[chroot]] στο νέο μας εγκατεστημένο σύστημα:
+ # arch-chroot /mnt
+
+* Γράψτε το hostname στο {{ic|/etc/hostname}}.
+* Δημιουργήστε ένα symlink του {{ic|/etc/localtime}} στο {{ic|/usr/share/zoneinfo/Zone/SubZone}}. Αντικαταστήστε το {{ic|Zone}} και το {{ic|Subzone}} σε αυτό που προτιμάτε. Για παράδειγμα:
+
+ # ln -s /usr/share/zoneinfo/Europe/Athens /etc/localtime
+
+* Ρυθμίστε τις προτιμήσεις του [[Locale#Setting the system locale|locale]] στο {{ic|/etc/locale.conf}}.
+* Προσθέστε τις προτίμήσεις του [[KEYMAP|console keymap και της γραμματοσειράς]] στο {{ic|/etc/vconsole.conf}}
+* Αποσχολιάστε το locale που θέλετε να χρησιμοποιήσετε στο {{ic|/etc/locale.gen}} και δημιουργήστε το με {{ic|locale-gen}}.
+* Διαμορφώστε το {{ic|/etc/mkinitcpio.conf}} όπως χρειάζεται (δείτε [[mkinitcpio]]) και δημιουργήστε το initial RAM disk με:
+
+ # mkinitcpio -p linux
+
+* Διαμορφώστε τον bootloader: αναφερθείτε πίσω στο κατάλληλο άρθρο από το τμήμα εγκατάστασης του bootloader.
+
+* Ορίστε έναν κωδικό για τον root με την εντολή {{ic|passwd}}.
+
+== Αποπροσάρτηση των partitions και επανεκκίνηση==
+Αν είστε ακόμα στο chroot περιβάλλον πληκτρολογήστε {{ic|exit}} ή πατήστε {{ic|Ctrl+D}} για να βγείτε.
+Προηγουμένως είχαμε προσαρτήσει τα partitions στο {{ic|/mnt}}, σε αυτό το βήμα θα τα αποπροσαρτήσουμε:
+ # umount /mnt/{boot,home,}
+
+Τέλος κάντε επανεκκίνηση και συνδεθείτε στο νέο σύστημα με το λογαριασμό root.
+
+== Διαμόρφωση του pacman ==
+Επεξεργαστείτε το {{ic|/etc/pacman.conf}} και διαμορφώστε τις επιλογές του pacman, ενεργοποιώντας επίσης όσα repositories χρειάζεστε.
+
+Δείτε το [[Pacman]] και το [[Official repositories]] για λεπτομέρειες.
+
+== Ενημέρωση συστήματος ==
+Σε αυτό το σημείο πρέπει να ενημερώσετε το σύστημά σας.
+
+Δείτε το [[Pacman#Upgrading packages|Upgrading packages]] για οδηγίες.
+
+== Προσθήκη χρήστη ==
+Τέλος, προσθέστε έναν κανονικό χρήστη όπως περιγράφεται στο [[Users and groups#User management|User management]].
