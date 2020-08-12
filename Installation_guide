@@ -56,7 +56,7 @@
 
 Εναλλακτικά, από μια υπάρχουσα εγκατάσταση Arch Linux εκτελέστε:
 
-   $ pacman-key -v archlinux - '' version '' - x86_64.iso.sig
+   $ pacman-key -v archlinux-''version''-x86_64.iso.sig
 
 {{Σημείωση |
 * Η ίδια η υπογραφή θα μπορούσε να παραποιηθεί εάν ληφθεί από έναν αλλον ιστότοπο καθρέφτη (mirror site), αντί από το [https://archlinux.org/download/ archlinux.org] όπως παραπάνω. Σε αυτήν την περίπτωση, βεβαιωθείτε ότι το δημόσιο κλειδί, το οποίο χρησιμοποιείται για την αποκωδικοποίηση της υπογραφής, είναι υπογεγραμμένο από άλλο, αξιόπιστο κλειδί. Η εντολή {{ic | gpg}} θα εμφανίσει το αποτύπωμα του δημόσιου κλειδιού.
@@ -73,19 +73,19 @@
 # Όταν εμφανιστεί το μενού φόρτωσης εκκίνησης του μέσου εγκατάστασης, επιλέξτε ''Arch Linux install medium'' και πατήστε {{ic | Enter}} για να εισέλθετε στο περιβάλλον εγκατάστασης. {{Συμβουλή | Η εικόνα εγκατάστασης χρησιμοποιεί [[systemd-boot]] για εκκίνηση σε λειτουργία UEFI και [[syslinux]] για εκκίνηση σε λειτουργία BIOS. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.bootparams README.bootparams] για μία λίστα [[Kernel parameters#Configuration|boot parameters].}}
 # Θα συνδεθείτε στην πρώτη [[Wikipedia:Virtual console|virtual console]] ως χρήστης root και θα εμφανιστεί το shell prompt [[Zsh]].
 
-Για να μεταβείτε σε διαφορετική κονσόλα — για παράδειγμα, για να δείτε αυτόν τον οδηγό με το [https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html Lynx] παράλληλα με την εγκατάσταση — χρησιμοποιήστε το {{ic | Alt + ''arrow''}} [[Keyboard shortcuts|shortcut]]. Για [[textedit | επεξεργαστείτε]] αρχεία διαμόρφωσης, {{man | 1 | mcedit}}, [[nano # Usage | nano]] και [[vim # Usage | vim]] είναι διαθέσιμα. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64] για μια λίστα με τα πακέτα που περιλαμβάνονται στο μέσο εγκατάστασης.
+Για να μεταβείτε σε διαφορετική κονσόλα — για παράδειγμα, για να δείτε αυτόν τον οδηγό με το [https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html Lynx] παράλληλα με την εγκατάσταση — χρησιμοποιήστε το {{ic | Alt + ''arrow''}} [[Keyboard shortcuts|shortcut]]. Για [[textedit | επεξεργαστείτε]] αρχεία διαμόρφωσης, {{man|1|mcedit}}, [[nano # Usage | nano]] και [[vim # Usage | vim]] είναι διαθέσιμα. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64] για μια λίστα με τα πακέτα που περιλαμβάνονται στο μέσο εγκατάστασης.
 
 === Ορίστε τη διάταξη του πληκτρολογίου ===
 
-Το προεπιλεγμένο [[console keymap]] είναι [[Wikipedia: File: KB United States-NoAltGr.svg | US]]. Οι διαθέσιμες διατάξεις μπορούν να απαριθμηθουν με την εντολή:
+Το προεπιλεγμένο [[console keymap]] είναι [[Wikipedia:File:KB United States-NoAltGr.svg|US]]. Οι διαθέσιμες διατάξεις μπορούν να απαριθμηθουν με την εντολή:
 
  # ls /usr/share/kbd/keymaps/**/*.map.gz
  
-Για να τροποποιήσετε τη διάταξη, προσθέστε ένα αντίστοιχο όνομα αρχείου στο {{man | 1 | loadkeys}}, παραλείποντας τη διαδρομή και την επέκταση αρχείου. Για παράδειγμα, για να ορίσετε μια διάταξη πληκτρολογίου [[Wikipedia: File: KB Germany.svg | German]],χρησιμοποιήστε την παρακάτω εντολή:
+Για να τροποποιήσετε τη διάταξη, προσθέστε ένα αντίστοιχο όνομα αρχείου στο {{man|1|loadkeys}}, παραλείποντας τη διαδρομή και την επέκταση αρχείου. Για παράδειγμα, για να ορίσετε μια διάταξη πληκτρολογίου [[Wikipedia: File: KB Germany.svg | German]],χρησιμοποιήστε την παρακάτω εντολή:
 
  # loadkeys de-latin1
 
-Τα [[Console fonts]] βρίσκονται στο {{ic | /usr/share/kbd/consolefonts/}} και μπορούν επίσης να ρυθμιστούν με το {{man|8|setfont}}.
+Τα [[Console fonts]] βρίσκονται στο {{ic|/usr/share/kbd/consolefonts/}} και μπορούν επίσης να ρυθμιστούν με το {{man|8|setfont}}.
 
 === Επαληθεύστε τη λειτουργία εκκίνησης ===
 
@@ -124,9 +124,9 @@
 
  # fdisk -l
  
- Τα αποτελέσματα που λήγουν σε {{ic|rom}}, {{ic|loop}} ή {{ic|airoot}} μπορούν να αγνοηθούν.
+Τα αποτελέσματα που λήγουν σε {{ic|rom}}, {{ic|loop}} ή {{ic|airoot}} μπορούν να αγνοηθούν.
  
- Τα ακόλουθα [[partition]] s απαιτούνται για μια επιλεγμένη συσκευή:
+Τα ακόλουθα [[partition]] s απαιτούνται για μια επιλεγμένη συσκευή:
  
 * Ένα partition για το [[Wikipedia:Root directory|root directory]] {{ic|/}}.
 * Για εκκίνηση σε λειτουργία [[UEFI]]: [EFI system partition]].
@@ -197,8 +197,6 @@
  # swapon /dev/sd''X2''
  
 Ανατρέξτε στο [[File systems# Create a file system]] για λεπτομέρειες.
-
-
  
 == Προσάρτηση των file systems ==
 
