@@ -110,14 +110,108 @@
 
 {{Σημείωση|To είδωλο εγκατάστασης έχει ενεργοποιήσει από προεπιλογή τις {{ic|systemd-networkd.service}}, {{ic|systemd-olved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
 
+=== Ενημερώστε το ρολόι συστήματος ===
+
+Χρησιμοποιήστε την εντολη {{man|1|timedatectl}} για να βεβαιωθείτε ότι το ρολόι συστήματος είναι ακριβές:
+
+ # timedatectl set-ntp true
+
+Για να ελέγξετε την κατάσταση του service, χρησιμοποιήστε την εντολή {{ic|timedatectl status}}. 
+
+=== Διαμόρφωση (Partition) δίσκων ===
+
+Όταν αναγνωρίζονται από το ζωντανό σύστημα, οι δίσκοι εκχωρούνται σε [[block device]] όπως για παραδειγμα {{ic|/dev/sda}}, {{ic|/dev/nvme0n1}} ή {{ic|/dev/mmcblk0}}. Για να προσδιορίσετε αυτές τις συσκευές, χρησιμοποιήστε [[lsblk]] ή ''fdisκ''.
+
+ # fdisk -l
+ 
+ Τα αποτελέσματα που λήγουν σε {{ic|rom}}, {{ic|loop}} ή {{ic|airoot}} μπορούν να αγνοηθούν.
+ 
+ Τα ακόλουθα [[partition]] s απαιτούνται για μια επιλεγμένη συσκευή:
+ 
+* Ένα partition για το [[Wikipedia:Root directory|root directory]] {{ic|/}}.
+* Για εκκίνηση σε λειτουργία [[UEFI]]: [EFI system partition]].
+
+Εάν θέλετε να δημιουργήσετε stacked block devices για [[LVM]], [[dm-crypt|system encryptio]] ή [[RAID]], κάντε το τώρα.
+
+==== Παράδειγμα διατάξεων ====
+
+{| class="wikitable"
+|+ BIOS with [[MBR]]
+|-
+! Mount point
+! Partition
+! [[Wikipedia:Partition type|Partition type]]
+! Προτεινόμενο μέγεθος
+|-
+| {{ic|/mnt}}
+| {{ic|/dev/sd''X''1}}
+| Linux
+| Υπολοιπη συσκευή
+|-
+| {{ic|[SWAP]}}
+| {{ic|/dev/sd''X''2}}
+| Linux swap
+| Περισσοτερα από 512 MiB
+|}
+
+{| class="wikitable"
+|+ UEFI with [[GPT]]
+|-
+! Mount point
+! Partition
+! [[Wikipedia:GUID Partition Table#Partition type GUIDs|Partition type]]
+! Προτεινόμενο μέγεθος
+|-
+| {{ic|/mnt/boot}} or {{ic|/mnt/efi}}
+| {{ic|/dev/sd''X''1}}
+| [[EFI system partition]]
+| 260–512 MiB
+|-
+| {{ic|/mnt}}
+| {{ic|/dev/sd''X''2}}
+| Linux x86-64 root (/)
+| Υπόλοιπο συσκευής
+|-
+| {{ic|[SWAP]}}
+| {{ic|/dev/sd''X''3}}
+| Linux swap
+| Περισσότερα από 512 MiB
+|}
+
+Δείτε επίσης [[Partitioning#Example layouts]].
+
+{{Σημείωση |
+* Χρησιμοποιήστε το [[fdisk]] ή το [[parted]] για να τροποποιήσετε τα partition tables, για παράδειγμα {{ic|fdisk /dev/sd''X''}}.
+* Το [[Swap]] μπορεί να ρυθμιστεί σε [[swap file]] για τα file systems που το υποστηρίζουν.
+}}
+
+=== Διαμόρφωση των partitions ===
+
+Μόλις δημιουργηθούν τα partitions, κάθε ένα πρέπει να διαμορφοθεί με ένα κατάλληλο [[file system]]. Για παράδειγμα, εάν το root partition είναι στο {{ic|/dev/sd''X''1}} και θα περιέχει το Ext4 files ystem, εκτελέστε:
+
+ # mkfs.ext4 /dev/sd''X1''
+
+Εάν δημιουργήσατε partition για [[swap]], αρχικοποιήστε το με {{man|8|mkswap}}:
+
+ # mkswap /dev/sd''X2''
+ # swapon /dev/sd''X2''
+ 
+Ανατρέξτε στο [[File systems# Create a file system]] για λεπτομέρειες.
 
 
+ 
+== Προσάρτηση των file systems ==
 
+[[Mount]] το file system στο root partition στο {{ic|/mnt}}, για παράδειγμα:
 
+ # mount /dev/sd''X1'' /mnt
 
-== Προσάρτηση των partitions ==
-Τώρα πρέπει να προσαρτήσουμε το root partition στο {{ic|/mnt}}. Θα πρέπει επίσης να δημιουργήσετε καταλόγους και να προσαρτήσετε όποια άλλα partitions φτιάξετε ({{ic|/mnt/boot}}, {{ic|/mnt/home}}, ...) αν θέλετε να εντοπιστούν από το {{ic|genfstab}}.
+Δημιουργήστε τυχόν υπόλοιπα σημεία προσάρτησης (όπως {{ic|/mnt/efi}}) χρησιμοποιώντας το {{man|1|mkdir}} και προσαρτηστε τα  αντίστοιχα partition.
 
+Το {{man|8|genfstab}} θα εντοπίσει αργότερα τα προσαρτημένα file systems καθώς και το swap.
+
+== Εγκατάσταση ==
+ 
 == Σύνδεση στο internet ==
 Μία υπηρεσία DHCP είναι ήδη ενεργοποιημένη για όλες τις διαθέσιμες συσκευές. Αν κάποιος χρειάζεται να ορίσει μία στατική IP ή να χρησιμοποιήσει κάποιο εργαλείο όπως το [[Netctl]], θα πρέπει να σταματήσει την υπηρεσία dhcp πρώτα: {{ic|systemctl stop dhcpcd.service}}. Για περισσότερες πληροφορίες επισκεφτείτε το [[configuring network]].
 
