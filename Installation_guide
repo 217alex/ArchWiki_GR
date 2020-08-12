@@ -32,13 +32,13 @@
 [[zh-hant:Installation guide]]
 {{Translateme (Ελληνικά)| Χρειάζεται επιμέλεια και αναβάθμιση}}
 
-Αυτό το άρθρο αποτελεί οδηγό για την εγκατάσταση του [[Arch Linux]] χρησιμοποιώντας το live σύστημα από ένα μέσο εγκατάστασης, φτιαγμένο από το επίσημο iso εγκατάστασης. Για εναλλακτικούς τρόπους εγκατάστασης, δείτε [[:Category:Installation process]].
+Αυτό το άρθρο αποτελεί οδηγό για την εγκατάσταση του [[Arch Linux]] χρησιμοποιώντας το live σύστημα από ένα μέσο εγκατάστασης, φτιαγμένο από το επίσημο είδωλο εγκατάστασης. Για εναλλακτικούς τρόπους εγκατάστασης, δείτε [[:Category:Installation process]].
 
 Πριν την εγκατάσταση, προτείνεται να συμβουλευτείτε το [[FAQ]]. Για συνθήκες που χρησιμοποιούνται σε αυτόν τον οδηγό, δείτε [[Help:Reading]]. Πιο συγκεκριμένα, τα παραδείγματα κώδικα μπορεί να περίεχουν σύμβολα υποκατάστασης (μορφωποιημένα σε {{ic|''italics''}}) που πρέπει να αντικατασταθούν χειροκίνητα.
 
 Για πιο λεπτομερείς οδηγίες, δείτε τα αντίστοιχα [[ArchWiki]] άρθρα ή τα [[man page]] από τα διάφορα προγράμματα, και τα δύο συνδέονται από αυτόν τον οδηγό. Για πιο διαδραστική βοήθεια, [[IRC channel]] και [https://bbs.archlinux.org/ forums] είναι επίσης διαθέσιμα.
 
-Η διανομή Arch Linux θα πρέπει να τρέχει σε οποιαδήποτε [[Wikipedia:X86-64|x86_64]]-συμβατή συσκευή με ελάχιστη μνήμη RAM 530 MB. Μια βασική εγκατάσταση θα πρέπει να πιάνει λιγότερα από 2GB στον δίσκο. Καθώς η εγκατάσταση προχωράει χρειάζεται να ανακτήσει πακέτα από ένα απομακρυνσμένο αποθετήριο, αυτός ο οδηγός προυποθέτει οτι μια λειτουργική σύνδεση στο διαδυκτιο είναι διαθέσιμη.
+Η διανομή Arch Linux θα πρέπει να τρέχει σε οποιαδήποτε [[Wikipedia:X86-64|x86_64]]-συμβατή συσκευή με ελάχιστη μνήμη RAM 530 MB. Μια βασική εγκατάσταση θα πρέπει να πιάνει λιγότερα από 2GB στον δίσκο. Καθώς η εγκατάσταση προχωράει χρειάζεται να ανακτήσει πακέτα από ε΄να απομακρυνσμένο αποθετήριο, αυτός ο οδηγός προυποθέτει οτι μια λειτουργική σύνδεση στο διαδυκτιο είναι διαθέσιμη.
 
 == Προ-εγκατάσταση ==
 
@@ -48,9 +48,9 @@
 
 === Επαληθεύστε την υπογραφή ===
 
-Συνιστάται να επαληθεύσετε την υπογραφή του iso πριν από τη χρήση, ειδικά κατά τη λήψη από ένα ''mirror HTTP'', όπου οι λήψεις είναι συνήθως επιρρεπείς σε υποκλοπή και [https://www2.cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html επιδίδουν κακόβουλα iso].
+Συνιστάται να επαληθεύσετε την υπογραφή του ειδώλου πριν από τη χρήση, ειδικά κατά τη λήψη από ένα ''καθρέφτη HTTP'', όπου οι λήψεις είναι συνήθως επιρρεπείς σε υποκλοπή και [https://www2.cs.arizona.edu/stork/packagemanagersecurity/attacks-on-package-managers.html επιδίδουν κακόβουλα iso].
 
-Σε ένα σύστημα με εγκατεστημένο το [[GnuPG]], μπορείτε να επαληθεύσετε κατεβάζοντας την ''υπογραφή PGP'' (στην ενότητα ''Checksums'' στη σελίδα [https://www.archlinux.org/download/ Download]) στον κατάλογο ISO και [[GnuPG#Verify a signature | επαληθεύστε]] με την εντολή:
+Σε ένα σύστημα με εγκατεστημένο το [[GnuPG]], μπορείτε να επαληθεύσετε κατεβάζοντας την ''υπογραφή PGP'' (στην ενότητα ''Checksums'' στη σελίδα [https://www.archlinux.org/download/ λήψης]) στον κατάλογο ISO και [[GnuPG#Verify a signature | επαληθεύστε]] με την εντολή:
 
  $ gpg --keyserver-options auto-key-retrieve --verify archlinux-''version''-x86_64.iso.sig
 
@@ -60,33 +60,32 @@
 
 {{Σημείωση |
 * Η ίδια η υπογραφή θα μπορούσε να παραποιηθεί εάν ληφθεί από έναν αλλον ιστότοπο καθρέφτη (mirror site), αντί από το [https://archlinux.org/download/ archlinux.org] όπως παραπάνω. Σε αυτήν την περίπτωση, βεβαιωθείτε ότι το δημόσιο κλειδί, το οποίο χρησιμοποιείται για την αποκωδικοποίηση της υπογραφής, είναι υπογεγραμμένο από άλλο, αξιόπιστο κλειδί. Η εντολή {{ic|gpg}} θα εμφανίσει το αποτύπωμα του δημόσιου κλειδιού.
-* Μια άλλη μέθοδος για την επαλήθευση της αυθεντικότητας της υπογραφής είναι να διασφαλιστεί ότι το αποτύπωμα του δημόσιου κλειδιού είναι ίδιο με το αποτύπωμα του κλειδιού του [https://www.archlinux.org/people/developers/ developer Arch Linux] που υπέγραψε το ISO-αρχείο. Ανατρέξτε στο [[Wikipedia: Κρυπτογράφηση δημόσιου κλειδιού]] για περισσότερες πληροφορίες σχετικά με τη διαδικασία δημόσιου κλειδιού για τον έλεγχο ταυτότητας κλειδιών.
+* Μια άλλη μέθοδος για την επαλήθευση της αυθεντικότητας της υπογραφής είναι να διασφαλιστεί ότι το αποτύπωμα του δημόσιου κλειδιού είναι ίδιο με το αποτύπωμα του κλειδιού του [https://www.archlinux.org/people/developers/ προγραμματιστή Arch Linux] που υπέγραψε το ISO- αρχείο. Ανατρέξτε στο [[Wikipedia:Public-key cryptography]] για περισσότερες πληροφορίες σχετικά με τη διαδικασία δημόσιου κλειδιού για τον έλεγχο ταυτότητας κλειδιών.
 }}
 
 === Προετοιμάστε ένα μέσο εγκατάστασης ===
 
-Το iso εγκατάστασης μπορεί να παρέχεται στο μηχάνημα προορισμού μέσω [[USB flash installation medium|USB flash drive]], [[Optical disc drive#Burning|optical disc]] ή δίκτυου με [[PXE]]: ακολουθήστε το κατάλληλο άρθρο για να προετοιμάσετε τον εαυτό σας ένα μέσο εγκατάστασης από το επιλεγμένο iso.
+Το iso εγκατάστασης μπορεί να εκκινήσει στον υπολιγιστή προορισμού μέσω [[USB flash installation medium|USB flash drive]], [[Optical disc drive#Burning|optical disc]] ή δίκτυου με [[PXE]]: ακολουθήστε το κατάλληλο άρθρο για να προετοιμάσετε ένα μέσο εγκατάστασης από το επιλεγμένο iso.
 
 === Εκκίνηση του <<ζωντανού>> συστήματος (live) ===
 
-# Υποδείξτε την τρέχουσα συσκευή εκκίνησης προς αυτήν που διαθέτει το μέσο εγκατάστασης Arch Linux. Συνήθως επιτυγχάνεται πατώντας ένα πλήκτρο κατά τη φάση [[Wikipedia: Power-on self test|POST]], όπως υποδεικνύεται στην οθόνη splash. Ανατρέξτε στο εγχειρίδιο της μητρικής πλακέτας σας για λεπτομέρειες.
-# Όταν εμφανιστεί το μενού φόρτωσης εκκίνησης του μέσου εγκατάστασης, επιλέξτε ''Arch Linux install medium'' και πατήστε {{ic|Enter}} για να εισέλθετε στο περιβάλλον εγκατάστασης. 
-{{Σημείωση | Το iso εγκατάστασης χρησιμοποιεί [[systemd-boot]] για εκκίνηση σε λειτουργία UEFI και [[syslinux]] για εκκίνηση σε λειτουργία BIOS. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.bootparams README.bootparams] για μία λίστα [[Kernel parameters#Configuration|boot parameters].}}
+# Υποδείξτε την τρέχουσα συσκευή εκκίνησης προς αυτήν που διαθέτει το μέσο εγκατάστασης Arch Linux. Συνήθως επιτυγχάνεται πατώντας ένα πλήκτρο κατά τη φάση [[Wikipedia: Power-on self test | POST]], όπως υποδεικνύεται στην οθόνη splash. Ανατρέξτε στο εγχειρίδιο της μητρικής πλακέτας σας για λεπτομέρειες.
+# Όταν εμφανιστεί το μενού φόρτωσης εκκίνησης του μέσου εγκατάστασης, επιλέξτε ''Arch Linux install medium'' και πατήστε {{ic | Enter}} για να εισέλθετε στο περιβάλλον εγκατάστασης.{{Συμβουλή|Η εικόνα εγκατάστασης χρησιμοποιεί [[systemd-boot]] για εκκίνηση σε λειτουργία UEFI και [[syslinux]] για εκκίνηση σε λειτουργία BIOS. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/docs/README.bootparams README.bootparams] για μία λίστα [[Kernel parameters#Configuration|boot parameters]].}}
 # Θα συνδεθείτε στην πρώτη [[Wikipedia:Virtual console|virtual console]] ως χρήστης root και θα εμφανιστεί το shell prompt [[Zsh]].
 
-Για να μεταβείτε σε διαφορετική κονσόλα — για παράδειγμα, για να δείτε αυτόν τον οδηγό με το [https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html Lynx] παράλληλα με την εγκατάσταση — χρησιμοποιήστε το {{ic | Alt + ''arrow''}} [[Keyboard shortcuts|shortcut]]. Για [[textedit | επεξεργαστείτε]] αρχεία διαμόρφωσης, {{man|1|mcedit}}, [[nano # Usage | nano]] και [[vim # Usage | vim]] είναι διαθέσιμα. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64] για μια λίστα με τα πακέτα που περιλαμβάνονται στο μέσο εγκατάστασης.
+Για να μεταβείτε σε διαφορετική κονσόλα — για παράδειγμα, για να δείτε αυτόν τον οδηγό με το [https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html Lynx] παράλληλα με την εγκατάσταση — χρησιμοποιήστε το {{ic | Alt + ''arrow''}} [[Keyboard shortcuts|shortcut]]. Για [[textedit|επεξεργαστείτε]] αρχεία διαμόρφωσης, {{man|1|mcedit}}, [[nano # Usage | nano]] και [[vim # Usage | vim]] είναι διαθέσιμα. Ανατρέξτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64] για μια λίστα με τα πακέτα που περιλαμβάνονται στο μέσο εγκατάστασης.
 
 === Ορίστε τη διάταξη του πληκτρολογίου ===
 
-Το προεπιλεγμένο [[console keymap]] είναι [[Wikipedia:File:KB United States-NoAltGr.svg|US]]. Οι διαθέσιμες διατάξεις μπορούν να απαριθμηθουν με την εντολή:
+Το προεπιλεγμένο [[console keymap]] είναι [[Wikipedia: File: KB United States-NoAltGr.svg | US]]. Οι διαθέσιμες διατάξεις μπορούν να απαριθμηθουν με την εντολή:
 
  # ls /usr/share/kbd/keymaps/**/*.map.gz
  
-Για να τροποποιήσετε τη διάταξη, προσθέστε ένα αντίστοιχο όνομα αρχείου στο {{man|1|loadkeys}}, παραλείποντας τη διαδρομή και την επέκταση αρχείου. Για παράδειγμα, για να ορίσετε μια διάταξη πληκτρολογίου [[Wikipedia: File: KB Germany.svg | German]],χρησιμοποιήστε την παρακάτω εντολή:
+Για να τροποποιήσετε τη διάταξη, προσθέστε ένα αντίστοιχο όνομα αρχείου στο {{man | 1 | loadkeys}}, παραλείποντας τη διαδρομή και την επέκταση αρχείου. Για παράδειγμα, για να ορίσετε μια διάταξη πληκτρολογίου [[Wikipedia: File: KB Germany.svg | German]],χρησιμοποιήστε την παρακάτω εντολή:
 
  # loadkeys de-latin1
 
-Τα [[Console fonts]] βρίσκονται στο {{ic|/usr/share/kbd/consolefonts/}} και μπορούν επίσης να ρυθμιστούν με το {{man|8|setfont}}.
+Τα [[Console fonts]] βρίσκονται στο {{ic | /usr/share/kbd/consolefonts/}} και μπορούν επίσης να ρυθμιστούν με το {{man|8|setfont}}.
 
 === Επαληθεύστε τη λειτουργία εκκίνησης ===
 
@@ -106,118 +105,26 @@
 ** Ethernet — συνδέστε το καλώδιο.
 ** Wi-Fi — έλεγχος ταυτότητας στο ασύρματο δίκτυο χρησιμοποιώντας το [[iwctl]].
 * Διαμορφώστε τη σύνδεση δικτύου σας:
-** [[DHCP]]: η δυναμική διεύθυνση IP και η εκχώρηση διακομιστή DNS (παρέχονται από [[systemd-networkd]] και [[systemd -resolved]]) θα πρέπει να είναι έτοιμα για χρήση για τα [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network wired] και [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network ασύρματο] interfaces δικτύου.
+** [[DHCP]]: η δυναμική διεύθυνση IP και η εκχώρηση διακομιστή DNS (παρέχονται από [[systemd-networkd]] και [[systemd -resolved]]) θα πρέπει να είναι έτοιμα για χρήση για τα [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network wired] και [https://gitlab.archlinux.org/archlinux/archiso/-/blob /master/configs/releng/airootfs/etc/systemd/network/20-wireless.network ασύρματο] interfaces δικτύου.
 * Η σύνδεση μπορεί να επαληθευτεί με την εντολή [[Wikipedia: ping (βοηθητικό πρόγραμμα δικτύωσης)|ping]]: {{bc|# ping archlinux.org}}
 
-{{Σημείωση|To είδωλο εγκατάστασης έχει ενεργοποιήσει από προεπιλογή τις {{ic|systemd-networkd.service}}, {{ic|systemd-resolved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
+{{Σημείωση|To είδωλο εγκατάστασης έχει ενεργοποιήσει από προεπιλογή τις {{ic|systemd-networkd.service}}, {{ic|systemd-olved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
 
-=== Ενημερώστε το ρολόι συστήματος ===
 
-Χρησιμοποιήστε την εντολη {{man|1|timedatectl}} για να βεβαιωθείτε ότι το ρολόι συστήματος είναι ακριβές:
 
- # timedatectl set-ntp true
 
-Για να ελέγξετε την κατάσταση του service, χρησιμοποιήστε την εντολή {{ic|timedatectl status}}. 
 
-=== Διαμόρφωση (Partition) δίσκων ===
 
-Όταν αναγνωρίζονται από το ζωντανό σύστημα, οι δίσκοι εκχωρούνται σε [[block device]] όπως για παραδειγμα {{ic|/dev/sda}}, {{ic|/dev/nvme0n1}} ή {{ic|/dev/mmcblk0}}. Για να προσδιορίσετε αυτές τις συσκευές, χρησιμοποιήστε [[lsblk]] ή ''fdisκ''.
+== Προσάρτηση των partitions ==
+Τώρα πρέπει να προσαρτήσουμε το root partition στο {{ic|/mnt}}. Θα πρέπει επίσης να δημιουργήσετε καταλόγους και να προσαρτήσετε όποια άλλα partitions φτιάξετε ({{ic|/mnt/boot}}, {{ic|/mnt/home}}, ...) αν θέλετε να εντοπιστούν από το {{ic|genfstab}}.
 
- # fdisk -l
- 
-Τα αποτελέσματα που λήγουν σε {{ic|rom}}, {{ic|loop}} ή {{ic|airoot}} μπορούν να αγνοηθούν.
- 
-Τα ακόλουθα [[partition]] s απαιτούνται για μια επιλεγμένη συσκευή:
- 
-* Ένα partition για το [[Wikipedia:Root directory|root directory]] {{ic|/}}.
-* Για εκκίνηση σε λειτουργία [[UEFI]]: [EFI system partition]].
-
-Εάν θέλετε να δημιουργήσετε stacked block devices για [[LVM]], [[dm-crypt|system encryptio]] ή [[RAID]], κάντε το τώρα.
-
-==== Παράδειγμα διατάξεων ====
-
-{| class="wikitable"
-|+ BIOS with [[MBR]]
-|-
-! Mount point
-! Partition
-! [[Wikipedia:Partition type|Partition type]]
-! Προτεινόμενο μέγεθος
-|-
-| {{ic|/mnt}}
-| {{ic|/dev/sd''X''1}}
-| Linux
-| Υπολοιπη συσκευή
-|-
-| {{ic|[SWAP]}}
-| {{ic|/dev/sd''X''2}}
-| Linux swap
-| Περισσοτερα από 512 MiB
-|}
-
-{| class="wikitable"
-|+ UEFI with [[GPT]]
-|-
-! Mount point
-! Partition
-! [[Wikipedia:GUID Partition Table#Partition type GUIDs|Partition type]]
-! Προτεινόμενο μέγεθος
-|-
-| {{ic|/mnt/boot}} or {{ic|/mnt/efi}}
-| {{ic|/dev/sd''X''1}}
-| [[EFI system partition]]
-| 260–512 MiB
-|-
-| {{ic|/mnt}}
-| {{ic|/dev/sd''X''2}}
-| Linux x86-64 root (/)
-| Υπόλοιπο συσκευής
-|-
-| {{ic|[SWAP]}}
-| {{ic|/dev/sd''X''3}}
-| Linux swap
-| Περισσότερα από 512 MiB
-|}
-
-Δείτε επίσης [[Partitioning#Example layouts]].
-
-{{Σημείωση |
-* Χρησιμοποιήστε το [[fdisk]] ή το [[parted]] για να τροποποιήσετε τα partition tables, για παράδειγμα {{ic|fdisk /dev/sd''X''}}.
-* Το [[Swap]] μπορεί να ρυθμιστεί σε [[swap file]] για τα file systems που το υποστηρίζουν.
-}}
-
-=== Διαμόρφωση των partitions ===
-
-Μόλις δημιουργηθούν τα partitions, κάθε ένα πρέπει να διαμορφοθεί με ένα κατάλληλο [[file system]]. Για παράδειγμα, εάν το root partition είναι στο {{ic|/dev/sd''X''1}} και θα περιέχει το Ext4 files ystem, εκτελέστε:
-
- # mkfs.ext4 /dev/sd''X1''
-
-Εάν δημιουργήσατε partition για [[swap]], αρχικοποιήστε το με {{man|8|mkswap}}:
-
- # mkswap /dev/sd''X2''
- # swapon /dev/sd''X2''
- 
-Ανατρέξτε στο [[File systems# Create a file system]] για λεπτομέρειες.
- 
-== Προσάρτηση των file systems ==
-
-[[Mount]] το file system στο root partition στο {{ic|/mnt}}, για παράδειγμα:
-
- # mount /dev/sd''X1'' /mnt
-
-Δημιουργήστε τυχόν υπόλοιπα σημεία προσάρτησης (όπως {{ic|/mnt/efi}}) χρησιμοποιώντας το {{man|1|mkdir}} και προσαρτηστε τα  αντίστοιχα partition.
-
-Το {{man|8|genfstab}} θα εντοπίσει αργότερα τα προσαρτημένα file systems καθώς και το swap.
-
-== Εγκατάσταση βασικού συστήματος ==
- 
 == Σύνδεση στο internet ==
 Μία υπηρεσία DHCP είναι ήδη ενεργοποιημένη για όλες τις διαθέσιμες συσκευές. Αν κάποιος χρειάζεται να ορίσει μία στατική IP ή να χρησιμοποιήσει κάποιο εργαλείο όπως το [[Netctl]], θα πρέπει να σταματήσει την υπηρεσία dhcp πρώτα: {{ic|systemctl stop dhcpcd.service}}. Για περισσότερες πληροφορίες επισκεφτείτε το [[configuring network]].
 
 === Ασύρματο ===
 Τρέξτε {{ic|iwctl}} για να διαμορφώσετε το ασύρματο δίκτυο. Για πληροφορίες δείτε το [[Wireless network configuration]] και το [[iwd]].
 
-== Εγκατάσταση  ==
+== Εγκατάσταση βασικού συστήματος ==
 Πριν την εγκατάσταση, τροποποιήστε το {{ic|/etc/pacman.d/mirrorlist}} και αφαιρέστε το σύμβολο {{ic|#}} μπροστά από τους κοντινούς στην τοποθεσία σας διακομιστές (servers). Αυτό το αντίγραφο της mirrorlist θα εγκατασταθεί στο νέο σας σύστημα από το {{ic|pacstrap}}, οπότε αξίζει να το φτιάξετε σωστά.
 
 Χρησιμοποιώντας το [https://github.com/falconindy/arch-install-scripts/blob/master/pacstrap.in pacstrap] script εγκαθιστούμε το βασικό σύστημα. Το group πακέτο {{ic|base-devel}} παρά το ότι είναι προαιρετικό, θα πρέπει επίσης να εγκατασταθεί αν σχεδιάζετε να μεταγλωττίσετε κάποιο πρόγραμμα από το [[AUR]] ή αν χρησιμοποιήσετε το [[ABS]].
