@@ -108,7 +108,7 @@
 ** [[DHCP]]: η δυναμική διεύθυνση IP και η εκχώρηση διακομιστή DNS (παρέχονται από [[systemd-networkd]] και [[systemd -resolved]]) θα πρέπει να είναι έτοιμα για χρήση για τα [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network wired] και [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network ασύρματο] interfaces δικτύου.
 * Η σύνδεση μπορεί να επαληθευτεί με την εντολή [[Wikipedia: ping (βοηθητικό πρόγραμμα δικτύωσης)|ping]]: {{bc|# ping archlinux.org}}
 
-{{Σημείωση|To είδωλο εγκατάστασης έχει ενεργοποιήσει από προεπιλογή τις {{ic|systemd-networkd.service}}, {{ic|systemd-olved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
+{{Σημείωση|To είδωλο εγκατάστασης έχει ενεργοποιήσει από προεπιλογή τις {{ic|systemd-networkd.service}}, {{ic|systemd-resolved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
 
 === Ενημερώστε το ρολόι συστήματος ===
 
@@ -208,7 +208,7 @@
 
 Το {{man|8|genfstab}} θα εντοπίσει αργότερα τα προσαρτημένα file systems καθώς και το swap.
 
-== Εγκατάσταση ==
+== Εγκατάσταση βασικού συστήματος ==
  
 == Σύνδεση στο internet ==
 Μία υπηρεσία DHCP είναι ήδη ενεργοποιημένη για όλες τις διαθέσιμες συσκευές. Αν κάποιος χρειάζεται να ορίσει μία στατική IP ή να χρησιμοποιήσει κάποιο εργαλείο όπως το [[Netctl]], θα πρέπει να σταματήσει την υπηρεσία dhcp πρώτα: {{ic|systemctl stop dhcpcd.service}}. Για περισσότερες πληροφορίες επισκεφτείτε το [[configuring network]].
@@ -216,7 +216,7 @@
 === Ασύρματο ===
 Τρέξτε {{ic|iwctl}} για να διαμορφώσετε το ασύρματο δίκτυο. Για πληροφορίες δείτε το [[Wireless network configuration]] και το [[iwd]].
 
-== Εγκατάσταση βασικού συστήματος ==
+== Εγκατάσταση  ==
 Πριν την εγκατάσταση, τροποποιήστε το {{ic|/etc/pacman.d/mirrorlist}} και αφαιρέστε το σύμβολο {{ic|#}} μπροστά από τους κοντινούς στην τοποθεσία σας διακομιστές (servers). Αυτό το αντίγραφο της mirrorlist θα εγκατασταθεί στο νέο σας σύστημα από το {{ic|pacstrap}}, οπότε αξίζει να το φτιάξετε σωστά.
 
 Χρησιμοποιώντας το [https://github.com/falconindy/arch-install-scripts/blob/master/pacstrap.in pacstrap] script εγκαθιστούμε το βασικό σύστημα. Το group πακέτο {{ic|base-devel}} παρά το ότι είναι προαιρετικό, θα πρέπει επίσης να εγκατασταθεί αν σχεδιάζετε να μεταγλωττίσετε κάποιο πρόγραμμα από το [[AUR]] ή αν χρησιμοποιήσετε το [[ABS]].
