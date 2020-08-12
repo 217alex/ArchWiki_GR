@@ -105,7 +105,7 @@
 ** Ethernet — συνδέστε το καλώδιο.
 ** Wi-Fi — έλεγχος ταυτότητας στο ασύρματο δίκτυο χρησιμοποιώντας το [[iwctl]].
 * Διαμορφώστε τη σύνδεση δικτύου σας:
-** [[DHCP]]: η δυναμική διεύθυνση IP και η εκχώρηση διακομιστή DNS (παρέχονται από [[systemd-networkd]] και [[systemd -resolved]]) θα πρέπει να είναι έτοιμα για χρήση για τα [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network wired] και [https://gitlab.archlinux.org/archlinux/archiso/-/blob /master/configs/releng/airootfs/etc/systemd/network/20-wireless.network ασύρματο] interfaces δικτύου.
+** [[DHCP]]: η δυναμική διεύθυνση IP και η εκχώρηση διακομιστή DNS (παρέχονται από [[systemd-networkd]] και [[systemd -resolved]]) θα πρέπει να είναι έτοιμα για χρήση για τα [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-ethernet.network wired] και [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs/etc/systemd/network/20-wireless.network ασύρματο] interfaces δικτύου.
 * Η σύνδεση μπορεί να επαληθευτεί με την εντολή [[Wikipedia: ping (βοηθητικό πρόγραμμα δικτύωσης)|ping]]: {{bc|# ping archlinux.org}}
 
 {{Σημείωση|To είδωλο εγκατάστασης έχει ενεργοποιήσει από προεπιλογή τις {{ic|systemd-networkd.service}}, {{ic|systemd-olved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
