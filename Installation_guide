@@ -80,7 +80,7 @@
 Το προεπιλεγμένο [[console keymap]] είναι [[Wikipedia:File:KB United States-NoAltGr.svg|US]]. Οι διαθέσιμες διατάξεις μπορούν να απαριθμηθουν με την εντολή:
 
  # ls /usr/share/kbd/keymaps/**/*.map.gz
- 
+
 Για να τροποποιήσετε τη διάταξη, προσθέστε ένα αντίστοιχο όνομα αρχείου στο {{man|1|loadkeys}}, παραλείποντας τη διαδρομή και την επέκταση αρχείου. Για παράδειγμα, για να ορίσετε μια διάταξη πληκτρολογίου [[Wikipedia:File:KB Germany.svg|German]],χρησιμοποιήστε την παρακάτω εντολή:
 
  # loadkeys de-latin1
@@ -92,7 +92,7 @@
 Για να επαληθεύσετε τη λειτουργία εκκίνησης, απαριθμήστε τον κατάλογο [[efivars]] με την εντολή:
 
  # ls /sys/firmware/efi/efivars
- 
+
 Εάν η εντολή εμφανίζει τον κατάλογο χωρίς σφάλμα, τότε το σύστημα εκκινείται σε λειτουργία UEFI. Εάν ο κατάλογος δεν υπάρχει, το σύστημα ίσως να εκκινεί σε [[Wikipedia:BIOS|BIOS]] (ή [[Wikipedia:Compatibility Support Module|CSM]]). Εάν το σύστημα δεν ξεκίνησε στη λειτουργία που θέλετε, ανατρέξτε στο εγχειρίδιο της μητρικής πλακέτας.
 
 === Σύνδεση στο διαδίκτυο ===
@@ -110,27 +110,197 @@
 
 {{Σημείωση|To iso εγκατάστασης έχει ενεργοποιήμενα τα services {{ic|systemd-networkd.service}}, {{ic|systemd-resolved.service}} και {{ic|iwd.service}}. Αυτό δεν θα ισχύει για το εγκατεστημένο σύστημα.}}
 
+=== Ενημέρωση του ρολόιου συστήματος ===
 
+Χρησιμοποιήστε το {{man|1|timedatectl}} για να βεβαιωθείτε ότι το ρολόι συστήματος είναι ακριβές:
 
+ # timedatectl set-ntp true
 
+Για να ελέγξετε την κατάσταση του service , χρησιμοποιήστε το {{ic|timedatectl status}}.
 
-== Προσάρτηση των partitions ==
-Τώρα πρέπει να προσαρτήσουμε το root partition στο {{ic|/mnt}}. Θα πρέπει επίσης να δημιουργήσετε καταλόγους και να προσαρτήσετε όποια άλλα partitions φτιάξετε ({{ic|/mnt/boot}}, {{ic|/mnt/home}}, ...) αν θέλετε να εντοπιστούν από το {{ic|genfstab}}.
+=== Διαμόρφωση δίσκων (Partitioning) ===
 
-== Σύνδεση στο internet ==
-Μία υπηρεσία DHCP είναι ήδη ενεργοποιημένη για όλες τις διαθέσιμες συσκευές. Αν κάποιος χρειάζεται να ορίσει μία στατική IP ή να χρησιμοποιήσει κάποιο εργαλείο όπως το [[Netctl]], θα πρέπει να σταματήσει την υπηρεσία dhcp πρώτα: {{ic|systemctl stop dhcpcd.service}}. Για περισσότερες πληροφορίες επισκεφτείτε το [[configuring network]].
+Όταν αναγνωρίζονται από το live σύστημα, οι δίσκοι εκχωρούνται σε [[block device]] όπως για παραδειγμα {{ic|/dev/sda}}, {{ic|/dev/nvme0n1}} ή {{ic|/dev/mmcblk0}}. Για να προσδιορίσετε αυτές τις συσκευές, χρησιμοποιήστε [[lsblk]] ή ''fdisk''.
 
-=== Ασύρματο ===
-Τρέξτε {{ic|iwctl}} για να διαμορφώσετε το ασύρματο δίκτυο. Για πληροφορίες δείτε το [[Wireless network configuration]] και το [[iwd]].
+ # fdisk -l
+
+Τα αποτελέσματα με κατάληξη σε {{ic|rom}}, {{ic|loop}} ή {{ic|airoot}} μπορούν να αγνοηθούν.
+
+Τα ακόλουθα [[partition]]s απαιτούνται για μια επιλεγμένη συσκευή:
+
+* Ένα partition για το [[Wikipedia: Root directory|root directory]] {{ic|/}}.
+* Για εκκίνηση σε λειτουργία [[UEFI]]: [[EFI system partition]].
+
+Εάν θέλετε να δημιουργήσετε stacked block devices για [[LVM]], [[dm-crypt|system encryption]] ή [[RAID]], κάντε το τώρα.
+
+==== Παράδειγμα διατάξεων ====
+
+{| class="wikitable"
+|+ BIOS with [[MBR]]
+|-
+! Mount point
+! Partition
+! [[Wikipedia:Partition type|Partition type]]
+! Προτεινόμενο μέγεθος
+|-
+| {{ic|/mnt}}
+| {{ic|/dev/sd''X''1}}
+| Linux
+| Υπόποιπος χώρος συστευής
+|-
+| {{ic|[SWAP]}}
+| {{ic|/dev/sd''X''2}}
+| Linux swap
+| Περισσότερα από 512 MiB
+|}
+
+{| class="wikitable"
+|+ UEFI with [[GPT]]
+|-
+! Mount point
+! Partition
+! [[Wikipedia:GUID Partition Table#Partition type GUIDs|Partition type]]
+! Suggested size
+|-
+| {{ic|/mnt/boot}} or {{ic|/mnt/efi}}
+| {{ic|/dev/sd''X''1}}
+| [[EFI system partition]]
+| 260–512 MiB
+|-
+| {{ic|/mnt}}
+| {{ic|/dev/sd''X''2}}
+| Linux x86-64 root (/)
+| Υπόποιπος χώρος συστευής
+|-
+| {{ic|[SWAP]}}
+| {{ic|/dev/sd''X''3}}
+| Linux swap
+| Περισσότερα από 512 MiB
+|}
+
+Δείτε επίσης [[Partitioning#Example layouts]].
+
+{{Σημείωση |
+* Χρησιμοποιήστε το [[fdisk]] ή το [[parted]] για να τροποποιήσετε τα partition tables, για παράδειγμα {{ic|fdisk /dev/sd''X''}}.
+* Ο χώρος [[Swap]] μπορεί να ρυθμιστεί σε [[swap file]] για file systems που το υποστηρίζουν.
+}}
+
+=== Διαμόρφωση των partitions ===
+
+Μόλις δημιουργηθούν τα partitions, το καθένα πρέπει να διαμορφοθεί με ένα κατάλληλο [[file system]]. Για παράδειγμα, εάν το root partition είναι στο {{ic|/dev/sd''X''1}} και θα περιέχει το σύστημα αρχείων Ext4, εκτελέστε:
+
+  # mkfs.ext4 /dev/sd''X1''
+
+Εάν δημιουργήσατε partition για [[swap]], αρχικοποιήστε το με {{man|8|mkswap}}:
+
+# mkswap /dev/sd''X2''
+# swapon /dev/sd''X2''
+
+Δείτε [[File systems#Create a file system]] για λεπτομέρειες.
+
+{{Σημείωση | Για stacked block devices αντικαταστήστε το {{ic|/dev/''* _ partition''}} με την κατάλληλη διαδρομή συσκευής block.}}
+
+=== Προσάρτηση των partitions ===
+
+[[Mount]] το root partition στο {{ic|/mnt}}. Για παράδειγμα, εάν ο τόμος root είναι {{ic|/dev/"root_partition"}}}:
+
+ # mount /dev/''root_partition'' /mnt
+
+Δημιουργήστε τυχόν υπόλοιπα σημεία προσάρτησης (όπως {{ic|/mnt/efi}}) χρησιμοποιώντας το {{man|1|mkdir}} και προσαρτήστε τα αντίστοιχα partition.
+
+Το {{man|8|genfstab}} θα εντοπίσει αργότερα τα προσαρτημένα partitions και το swap.
 
 == Εγκατάσταση βασικού συστήματος ==
-Πριν την εγκατάσταση, τροποποιήστε το {{ic|/etc/pacman.d/mirrorlist}} και αφαιρέστε το σύμβολο {{ic|#}} μπροστά από τους κοντινούς στην τοποθεσία σας διακομιστές (servers). Αυτό το αντίγραφο της mirrorlist θα εγκατασταθεί στο νέο σας σύστημα από το {{ic|pacstrap}}, οπότε αξίζει να το φτιάξετε σωστά.
 
-Χρησιμοποιώντας το [https://github.com/falconindy/arch-install-scripts/blob/master/pacstrap.in pacstrap] script εγκαθιστούμε το βασικό σύστημα. Το group πακέτο {{ic|base-devel}} παρά το ότι είναι προαιρετικό, θα πρέπει επίσης να εγκατασταθεί αν σχεδιάζετε να μεταγλωττίσετε κάποιο πρόγραμμα από το [[AUR]] ή αν χρησιμοποιήσετε το [[ABS]].
+=== Επιλογή των mirrors ===
 
- # pacstrap /mnt base base-devel
+Τα πακέτα που πρόκειται να εγκατασταθούν πρέπει να ληφθούν από [[Mirrors | mirror servers]], τα οποία ορίζονται στο {{ic|/etc/pacman.d/mirrorlist}}. Στο live σύστημα, μετά τη σύνδεση στο Διαδίκτυο, το [[reflector]] ενημερώνει τη λίστα καθρεφτών επιλέγοντας 70 πιο πρόσφατα συγχρονισμένα HTTPS mirrors και ταξινομώντας τους με τον ρυθμό λήψης. [Https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/airootfs /etc/systemd/system/reflector.service]
 
-Άλλα πακέτα μπορούν να εγκατασταθούν προσαρτώντας το όνομά τους στην παραπάνω εντολή (χωρισμένα με κενό), περιλαμβανομένου του bootloader αν θέλετε.
+Όσο υψηλότερα τοποθετείται ένα mirror στη λίστα, τόσο μεγαλύτερη προτεραιότητα δίνεται κατά τη λήψη ενός πακέτου. Μπορεί να θέλετε να ελέγξετε το αρχείο για να δείτε εάν είναι ικανοποιητικό. Εάν δεν είναι, επεξεργαστείτε το αρχείο ανάλογα και μετακινήστε τους γεωγραφικά πιο κοντινούς καθρέφτες στην κορυφή της λίστας, αν και πρέπει να ληφθούν υπόψη και άλλα κριτήρια.
+
+Αυτό το αρχείο θα αντιγραφεί αργότερα στο νέο σύστημα από το pacstrap, οπότε αξίζει να γίνει σωστό.
+
+=== Εγκατάσταση <<ζωτικών>> πακέτων ===
+
+Χρησιμοποιήστε το {{man|8|pacstrap}} script για να εγκαταστήσετε τα πακέτα {{Pkg|base}}, Linux [[kernel]] και firmware για κοινό υλικό:
+
+ # pacstrap /mnt base linux linux-firmware
+
+{{Συμβουλή |
+* Μπορείτε να αντικαταστήσετε το {{Pkg|linux}} με ένα πακέτο [[kernel] της επιλογής σας, ή θα μπορούσατε να το παραλείψετε εντελώς κατά την εγκατάσταση σε [[Wikipedia: Container (virtualization)|container]].
+* Θα μπορούσατε να παραλείψετε την εγκατάσταση του πακέτου firmware κατά την εγκατάσταση σε εικονική μηχανή ή container.
+}}
+
+Το πακέτο {{Pkg | base}} δεν περιλαμβάνει όλα τα εργαλεία από τη ζωντανή εγκατάσταση, επομένως η εγκατάσταση άλλων πακέτων μπορεί να είναι απαραίτητη για ένα πλήρως λειτουργικό βασικό σύστημα. Συγκεκριμένα, σκεφτείτε να εγκαταστήσετε:
+
+* userpace βοηθητικά προγράμματα για τη διαχείριση των [[file systems]] που θα χρησιμοποιηθούν στο σύστημα,
+* βοηθητικά προγράμματα για πρόσβαση σε partitions [[RAID]] ή [[LVM]],
+* συγκεκριμένο firmware για άλλες συσκευές που δεν περιλαμβάνονται στο {{Pkg|linux-firmware}},
+* απαραίτητο λογισμικό για [[networking]],
+* ένα [[text editor]],
+* πακέτα για πρόσβαση στα εγχειρίαδια [[man]] και [[info]]: {{Pkg|man-db}}, {{Pkg|man-pages}} και {{Pkg|texinfo}}.
+
+Για να [install|εγκαταστησετε]] άλλα πακέτα ή ομάδες πακέτων, προσθέστε τα ονόματα στην εντολή "pacstrap" παραπάνω (διαχωρισμένο με κενό διάστημα) ή χρησιμοποιήστε το [[pacman]] ενώ [[#Chroot | chroot στο νέο σύστημα]]. Για σύγκριση, τα πακέτα που είναι διαθέσιμα στο ζωντανό σύστημα μπορείτε να βρείτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64].
+
+== Διαμόρφωση του συστήματος ==
+
+=== Fstab ===
+
+Δημιουργήστε ένα αρχείο [[fstab]] (χρησιμοποιήστε το {{ic|-U}} ή το {{ic|-L}} για να ορίσετε σύμφωνα με [[UUID]] ή ετικέτες, αντίστοιχα):
+
+ # genfstab -U /mnt >> /mnt/etc/fstab
+
+Ελέγξτε το αρχείο {{ic|/mnt/etc/fstab}} που προκύπτει και επεξεργαστείτε το σε περίπτωση σφαλμάτων.
+
+=== Chroot ===
+
+[[Change root]] στο καινουργιο σύστημα:
+
+ # arch-chroot /mnt
+
+=== Ζώνη ώρας ===
+
+Ορίστε το [[time zone|ζώνη ώρας]]:
+
+ # ln -sf /usr/share/zoneinfo/''Region''/''City'' /etc/localtime
+
+Εκτελέστε το {{man|8|hwclock}} για να δημιουργήσετε {{ic|/etc/adjtime}}:
+
+ # hwclock --systohc
+
+Αυτή η εντολή προϋποθέτει ότι το ρολόι υλικού έχει ρυθμιστεί σε [[Wikipedia: UTC|UTC]]. Για λεπτομέρειες, ανατρέξτε στο [[Time system # Time standard]].
+
+=== Localization ===
+
+Επεξεργαστείτε το {{ic|/etc/locale.gen}} και αφαιρέστε το σχόλιο (uncomment) από το  {{ic|en_US.UTF-8 UTF-8}} και άλλα απαραίτητα [[locale]]s. Δημιουργήστε τις τοπικές ρυθμίσεις εκτελώντας:
+
+ # locale-gen
+
+Δημιουργήστε το αρχείο {{man|5|locale.conf}} και [[Locale # Setting the system locale|set the LANG variable]] ανάλογα:
+
+{{hc|1=/etc/locale.conf|2=
+LANG=''en_US.UTF-8''
+}
+
+Εάν [[#Set the keyboard layout|ορίσετε τη διάταξη πληκτρολογίου]], κάντε τις αλλαγές μόνιμες στο {{man|5|vconsole.conf}}:
+
+{{hc|1=/etc/vconsole.conf|2=
+KEYMAP=''de-latin1''
+}}
+
+=== Network configuration ===
+
+Δημιουργήστε το αρχείο [[hostname]]:
+
+{{hc|/etc/hostname|
+''myhostname''
+}}
+
+
+
+
+
+
 
 == Εγκατάσταση του bootloader ==
 === [[GRUB]] ===
@@ -149,20 +319,6 @@
 
  # arch-chroot /mnt pacman -S syslinux
 
-== Διαμόρφωση συστήματος ==
-Δημιουργήστε το [[fstab]] με την εξής εντολή (αν προτιμάτε να χρησιμοποιήσετε UUIDs ή labels, προσθέστε την επιλογή {{ic|-U}} ή {{ic|-L}}, αντίστοιχα):
- # genfstab -p /mnt >> /mnt/etc/fstab
-Έπειτα κάνουμε [[chroot]] στο νέο μας εγκατεστημένο σύστημα:
- # arch-chroot /mnt
-
-* Γράψτε το hostname στο {{ic|/etc/hostname}}.
-* Δημιουργήστε ένα symlink του {{ic|/etc/localtime}} στο {{ic|/usr/share/zoneinfo/Zone/SubZone}}. Αντικαταστήστε το {{ic|Zone}} και το {{ic|Subzone}} σε αυτό που προτιμάτε. Για παράδειγμα:
-
- # ln -s /usr/share/zoneinfo/Europe/Athens /etc/localtime
-
-* Ρυθμίστε τις προτιμήσεις του [[Locale#Setting the system locale|locale]] στο {{ic|/etc/locale.conf}}.
-* Προσθέστε τις προτίμήσεις του [[KEYMAP|console keymap και της γραμματοσειράς]] στο {{ic|/etc/vconsole.conf}}
-* Αποσχολιάστε το locale που θέλετε να χρησιμοποιήσετε στο {{ic|/etc/locale.gen}} και δημιουργήστε το με {{ic|locale-gen}}.
 * Διαμορφώστε το {{ic|/etc/mkinitcpio.conf}} όπως χρειάζεται (δείτε [[mkinitcpio]]) και δημιουργήστε το initial RAM disk με:
 
  # mkinitcpio -p linux
