@@ -117,6 +117,13 @@
  # timedatectl set-ntp true
 
 Για να ελέγξετε την κατάσταση του service , χρησιμοποιήστε το {{ic|timedatectl status}}.
+=== Ενημέρωση του ρολόιου συστήματος ===
+
+Χρησιμοποιήστε το {{man|1|timedatectl}} για να βεβαιωθείτε ότι το ρολόι συστήματος είναι ακριβές:
+
+ # timedatectl set-ntp true
+
+Για να ελέγξετε την κατάσταση του service , χρησιμοποιήστε το {{ic|timedatectl status}}.
 
 === Διαμόρφωση δίσκων (Partitioning) ===
 
@@ -202,7 +209,7 @@
 
 === Προσάρτηση των partitions ===
 
-[[Mount]] το root partition στο {{ic|/mnt}}. Για παράδειγμα, εάν ο τόμος root είναι {{ic|/dev/"root_partition"}}}:
+[[Mount]] το root partition στο {{ic|/mnt}}. Για παράδειγμα, εάν ο τόμος root είναι {{ic|/dev/"root_partition"}}:
 
  # mount /dev/''root_partition'' /mnt
 
@@ -227,7 +234,7 @@
  # pacstrap /mnt base linux linux-firmware
 
 {{Συμβουλή |
-* Μπορείτε να αντικαταστήσετε το {{Pkg|linux}} με ένα πακέτο [[kernel] της επιλογής σας, ή θα μπορούσατε να το παραλείψετε εντελώς κατά την εγκατάσταση σε [[Wikipedia: Container (virtualization)|container]].
+* Μπορείτε να αντικαταστήσετε το {{Pkg|linux}} με ένα πακέτο [[kernel]] της επιλογής σας, ή θα μπορούσατε να το παραλείψετε εντελώς κατά την εγκατάσταση σε [[Wikipedia: Container (virtualization)|container]].
 * Θα μπορούσατε να παραλείψετε την εγκατάσταση του πακέτου firmware κατά την εγκατάσταση σε εικονική μηχανή ή container.
 }}
 
@@ -240,7 +247,7 @@
 * ένα [[text editor]],
 * πακέτα για πρόσβαση στα εγχειρίαδια [[man]] και [[info]]: {{Pkg|man-db}}, {{Pkg|man-pages}} και {{Pkg|texinfo}}.
 
-Για να [install|εγκαταστησετε]] άλλα πακέτα ή ομάδες πακέτων, προσθέστε τα ονόματα στην εντολή "pacstrap" παραπάνω (διαχωρισμένο με κενό διάστημα) ή χρησιμοποιήστε το [[pacman]] ενώ [[#Chroot | chroot στο νέο σύστημα]]. Για σύγκριση, τα πακέτα που είναι διαθέσιμα στο ζωντανό σύστημα μπορείτε να βρείτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64].
+Για να [[install|εγκαταστησετε]] άλλα πακέτα ή ομάδες πακέτων, προσθέστε τα ονόματα στην εντολή "pacstrap" παραπάνω (διαχωρισμένο με κενό διάστημα) ή χρησιμοποιήστε το [[pacman]] ενώ [[#Chroot | chroot στο νέο σύστημα]]. Για σύγκριση, τα πακέτα που είναι διαθέσιμα στο ζωντανό σύστημα μπορείτε να βρείτε στο [https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/configs/releng/packages.x86_64 package.x86_64].
 
 == Διαμόρφωση του συστήματος ==
 
@@ -268,7 +275,7 @@
 
  # hwclock --systohc
 
-Αυτή η εντολή προϋποθέτει ότι το ρολόι υλικού έχει ρυθμιστεί σε [[Wikipedia: UTC|UTC]]. Για λεπτομέρειες, ανατρέξτε στο [[Time system # Time standard]].
+Αυτή η εντολή προϋποθέτει ότι το ρολόι υλικού έχει ρυθμιστεί σε [[Wikipedia: UTC|UTC]]. Για λεπτομέρειες, ανατρέξτε στο [[System time#Time standard]].
 
 === Localization ===
 
@@ -312,7 +319,7 @@ KEYMAP=''de-latin1''
 
 Η δημιουργία ενός νέου ''initramfs'' συνήθως δεν απαιτείται, επειδή το [[mkinitcpio]] εκτελέστηκε κατά την εγκατάσταση του πακέτου [[kernel]] με το ''pacstrap''.
 
-Για [[Install Arch Linux on LVM # Adding mkinitcpio hooks|LVM]], [[dm-crypt|system encryption]] ή [[RAID # Configure mkinitcpio|RAID]], τροποποιήστε το {{man|5|mkinitcpio.conf} } και αναδημιουργήστε την "εικόνα" initramfs:
+Για [[Install Arch Linux on LVM # Adding mkinitcpio hooks|LVM]], [[dm-crypt|system encryption]] ή [[RAID # Configure mkinitcpio|RAID]], τροποποιήστε το {{man|5|mkinitcpio.conf}} και αναδημιουργήστε την "εικόνα" initramfs:
 
  # mkinitcpio -P
 
@@ -324,7 +331,7 @@ KEYMAP=''de-latin1''
  
 == Εγκατάσταση του bootloader ==
 
-Επιλέξτε και εγκαταστήστε έναν [[boot loader]] που μπορεί να ξεκινήσει το Linux. Εάν διαθέτετε CPU Intel ή AMD, ενεργοποιήστε επιπλέον τις ενημερώσεις [[μικροκώδικα|microcode]].
+Επιλέξτε και εγκαταστήστε έναν [[boot loader]] που μπορεί να ξεκινήσει το Linux. Εάν διαθέτετε CPU Intel ή AMD, ενεργοποιήστε επιπλέον τις ενημερώσεις [[microcode]].
 
 == Reboot ==
 
