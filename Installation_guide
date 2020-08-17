@@ -296,53 +296,46 @@ KEYMAP=''de-latin1''
 ''myhostname''
 }}
 
+Προσθέστε αντίστοιχες καταχωρήσεις στο {{man|5|hosts}}:
 
+{{hc|/etc/hosts|
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	''myhostname''.localdomain	''myhostname''
+}}
 
+Εάν το σύστημα έχει μόνιμη διεύθυνση IP, θα πρέπει να χρησιμοποιείται αντί για {{ic|127.0.1.1}}.
 
+Ολοκληρώστε το [[network configuration]] για το πρόσφατα εγκατεστημένο περιβάλλον, που περιλαμβάνει την εγκατάσταση του προτιμώμενου λογισμικού [[network management]].
 
+=== Initramfs ===
 
+Η δημιουργία ενός νέου ''initramfs'' συνήθως δεν απαιτείται, επειδή το [[mkinitcpio]] εκτελέστηκε κατά την εγκατάσταση του πακέτου [[kernel]] με το ''pacstrap''.
 
+Για [[Install Arch Linux on LVM # Adding mkinitcpio hooks|LVM]], [[dm-crypt|system encryption]] ή [[RAID # Configure mkinitcpio|RAID]], τροποποιήστε το {{man|5|mkinitcpio.conf} } και αναδημιουργήστε την "εικόνα" initramfs:
+
+ # mkinitcpio -P
+
+=== Root password ===
+
+Ορίστε [[password]] για τον root (χρήστη):
+
+ # passwd
+ 
 == Εγκατάσταση του bootloader ==
-=== [[GRUB]] ===
 
-* Για BIOS:
+Επιλέξτε και εγκαταστήστε έναν [[boot loader]] που μπορεί να ξεκινήσει το Linux. Εάν διαθέτετε CPU Intel ή AMD, ενεργοποιήστε επιπλέον τις ενημερώσεις [[μικροκώδικα|microcode]].
 
- # arch-chroot /mnt pacman -S grub-bios
+== Reboot ==
 
-* Για EFI (σε σπάνιες περιπτώσεις θα χρειαστείτε το {{ic|grub-efi-i386}}):
+Βγείτε από το περιβάλλον chroot πληκτρολογώντας {{ic|exit}} ή πατώντας {{ic|Ctrl + d}}.
 
- # arch-chroot /mnt pacman -S grub-efi-x86_64
+Προαιρετικά, αποπροσαρτήστε με μη αυτόματο τρόπο όλα τα partitions με {{ic|umount -R /mnt}}: αυτό επιτρέπει να παρατηρήσετε τυχόν "απασχολημένα" partitions και να εντοπίσετε την αιτία με το {{man|1|fuser}}.
 
-* Εγκατάσταση του GRUB μετά το chrooting (αναφερθείτε στο τμήμα [[#Ενημέρωση συστήματος|Διαμόρφωση συστήματος]]).
+Τέλος, επανεκκινήστε τον υπολογιστή πληκτρολογώντας {{ic|reboot}}: τυχόν partitions που είναι ακόμα τοποθετημένα θα αποσυνδεθούν αυτόματα από το "systemd". Θυμηθείτε να καταργήσετε το μέσο εγκατάστασης και μετά να συνδεθείτε στο νέο σύστημα με τον λογαριασμό root.
 
-=== [[Syslinux]] ===
+== Μετά την εγκατάσταση ==
 
- # arch-chroot /mnt pacman -S syslinux
+Ανατρέξτε στο [[General recommendations]] για οδηγίες διαχείρισης συστήματος και post-installation οδηγίες (όπως ρύθμιση γραφικής διεπαφής χρήστη, ήχου ή επιφάνειας αφής(touchpad)).
 
-* Διαμορφώστε το {{ic|/etc/mkinitcpio.conf}} όπως χρειάζεται (δείτε [[mkinitcpio]]) και δημιουργήστε το initial RAM disk με:
-
- # mkinitcpio -p linux
-
-* Διαμορφώστε τον bootloader: αναφερθείτε πίσω στο κατάλληλο άρθρο από το τμήμα εγκατάστασης του bootloader.
-
-* Ορίστε έναν κωδικό για τον root με την εντολή {{ic|passwd}}.
-
-== Αποπροσάρτηση των partitions και επανεκκίνηση==
-Αν είστε ακόμα στο chroot περιβάλλον πληκτρολογήστε {{ic|exit}} ή πατήστε {{ic|Ctrl+D}} για να βγείτε.
-Προηγουμένως είχαμε προσαρτήσει τα partitions στο {{ic|/mnt}}, σε αυτό το βήμα θα τα αποπροσαρτήσουμε:
- # umount /mnt/{boot,home,}
-
-Τέλος κάντε επανεκκίνηση και συνδεθείτε στο νέο σύστημα με το λογαριασμό root.
-
-== Διαμόρφωση του pacman ==
-Επεξεργαστείτε το {{ic|/etc/pacman.conf}} και διαμορφώστε τις επιλογές του pacman, ενεργοποιώντας επίσης όσα repositories χρειάζεστε.
-
-Δείτε το [[Pacman]] και το [[Official repositories]] για λεπτομέρειες.
-
-== Ενημέρωση συστήματος ==
-Σε αυτό το σημείο πρέπει να ενημερώσετε το σύστημά σας.
-
-Δείτε το [[Pacman#Upgrading packages|Upgrading packages]] για οδηγίες.
-
-== Προσθήκη χρήστη ==
-Τέλος, προσθέστε έναν κανονικό χρήστη όπως περιγράφεται στο [[Users and groups#User management|User management]].
+Για μια λίστα εφαρμογών που μπορεί να σας ενδιαφέρουν, δείτε [[List of applications]].
