@@ -4,9 +4,9 @@
 
 Αυτή η ενότητα ασχολείται με διαχειριστικά καθήκοντα και διαχείριση συστήματος. Για περισσότερα, ανατρέξτε στα [[Core Utilities]] και [[: Category: System management]].
 
-=== Χρήστες και gpoups ===
+=== Χρήστες και groups ===
 
-Μια νέα εγκατάσταση σάς αφήνει μόνο με τον λογαριασμό [[Wikipedia: Superuser | superuser]], γνωστός ως "root". H σύνδεση ως root για παρατεταμένες χρονικές περιόδους, πιθανόν ακόμη και μέσω [[SSH]] σε διακομιστή, [https://apple.stackexchange.com/questions/192365/is-it-ok-to-use-the -root-user-as-a-normal-user / 192422 # 192422 είναι ανασφαλές]. Αντ 'αυτού, θα πρέπει να δημιουργήσετε και να χρησιμοποιήσετε λογαριασμούς χρήστη χωρίς προνόμια για τις περισσότερες εργασίες, χρησιμοποιώντας μόνο τον λογαριασμό root για τη διαχείριση του συστήματος. Ανατρέξτε στο [[Χρήστες και ομάδες#Διαχείριση χρηστών]] για λεπτομέρειες.
+Μια νέα εγκατάσταση σάς αφήνει μόνο με τον λογαριασμό [[Wikipedia: Superuser | superuser]], γνωστός ως "root". H σύνδεση ως root για παρατεταμένες χρονικές περιόδους, πιθανόν ακόμη και μέσω [[SSH]] σε διακομιστή, [https://apple.stackexchange.com/questions/192365/is-it-ok-to-use-the -root-user-as-a-normal-user/192422#192422 είναι ανασφαλές]. Αντ 'αυτού, θα πρέπει να δημιουργήσετε και να χρησιμοποιήσετε λογαριασμούς χρήστη χωρίς προνόμια για τις περισσότερες εργασίες, χρησιμοποιώντας μόνο τον λογαριασμό root για τη διαχείριση του συστήματος. Ανατρέξτε στο [[Χρήστες και ομάδες#Διαχείριση χρηστών]] για λεπτομέρειες.
 
 Οι χρήστες και τα groups είναι ένας μηχανισμός για "έλεγχο πρόσβασης". Οι διαχειριστές μπορούν να προσαρμόσουν την ιδιότητα μέλους και την ιδιοκτησία του group για να παραχωρήσουν ή να αρνηθούν την πρόσβαση χρηστών και υπηρεσιών σε πόρους του συστήματος. Διαβάστε το άρθρο [[Χρήστες και ομάδες]] για λεπτομέρειες και πιθανούς κινδύνους ασφαλείας.
 
@@ -14,45 +14,47 @@
 
 Τα ακόλουθα βοηθητικά προγράμματα της γραμμής εντολών επιτρέπουν την εκτέλεση εντολών ή την εκκίνηση ενός διαδραστικού κελύφους (shell) ως άλλου χρήστη (π.χ. root).
 
-* {{Εφαρμογή | [[su]] | Επιτρέπει την ανάληψη της ταυτότητας άλλου χρήστη, εφόσον γνωρίζετε τον κωδικό πρόσβασης του χρήστη. Το root μπορεί να αναλάβει άλλες ταυτότητες χωρίς να χρειάζεται κωδικό πρόσβασης. | https: //github.com/karelzak/util-linux | {{Pkg | util-linux}} (εξάρτηση του {{Pkg | base}})}}}
-* {{Εφαρμογή | [[sudo]] | Επιτρέπει σε έναν διαχειριστή συστήματος να εκχωρήσει εξουσιοδότηση για να δώσει σε ορισμένους χρήστες (ή ομάδες χρηστών) τη δυνατότητα εκτέλεσης ορισμένων (ή όλων) εντολών ως root ή άλλου χρήστη, παρέχοντας παράλληλα ένα ίχνος ελέγχου των εντολών και των παραμέτρων τους. Στην προεπιλεγμένη διαμόρφωση μπορεί να χρησιμοποιηθεί μόνο μέσω root. | Https: //www.sudo.ws/sudo/ | {{Pkg | sudo}}}}
-* {{App | {{man | 1 | pkexec}} | Μια εφαρμογή [[Polkit]] που επιτρέπει σε έναν εξουσιοδοτημένο χρήστη να εκτελεί εντολές ή ένα διαδραστικό κέλυφος (shell) ως άλλος χρήστης. Διαμορφώθηκε με χρήση κανόνων Polkit. | Https: //gitlab.freedesktop.org/polkit/polkit/ | {{Pkg | polkit}}}}
-* {{Εφαρμογή | [[Wikipedia: doas | doas]] | Μια μικρότερη, απλούστερη εναλλακτική λύση για το "sudo". | Https: //github.com/Duncaen/OpenDoas | {{Pkg | opendoas}}}}
+* {{App|[[su]]|Επιτρέπει την ανάληψη της ταυτότητας άλλου χρήστη, εφόσον γνωρίζετε τον κωδικό πρόσβασης του χρήστη. Το root μπορεί να αναλάβει άλλες ταυτότητες χωρίς να χρειάζεται κωδικό πρόσβασης.|https://github.com/karelzak/util-linux|{{Pkg|util-linux}} (εξάρτηση του {{Pkg|base}})}}}
+* {{App|[[sudo]]|Επιτρέπει σε έναν διαχειριστή συστήματος να εκχωρήσει εξουσιοδότηση για να δώσει σε ορισμένους χρήστες (ή ομάδες χρηστών) τη δυνατότητα εκτέλεσης ορισμένων (ή όλων) εντολών ως root ή άλλου χρήστη, παρέχοντας παράλληλα ένα ίχνος ελέγχου των εντολών και των παραμέτρων τους. Στην προεπιλεγμένη διαμόρφωση μπορεί να χρησιμοποιηθεί μόνο μέσω root. | Https: //www.sudo.ws/sudo/ | {{Pkg | sudo}}}}
+* {{App|{{man|1|pkexec}}|Μια εφαρμογή [[Polkit]] που επιτρέπει σε έναν εξουσιοδοτημένο χρήστη να εκτελεί εντολές ή ένα διαδραστικό κέλυφος (shell) ως άλλος χρήστης. Διαμορφώθηκε με χρήση κανόνων Polkit. | Https: //gitlab.freedesktop.org/polkit/polkit/ | {{Pkg | polkit}}}}
+* {{App|[[Wikipedia:doas|doas]]|Mια μικρότερη, απλούστερη εναλλακτική λύση για το "sudo". | Https: //github.com/Duncaen/OpenDoas | {{Pkg | opendoas}}}}
 
 === Διαχείριση υπηρεσιών ===
 
-Το Arch Linux χρησιμοποιεί το [[systemd]] ως διαχείρηση [[init]], η οποία είναι ένας διαχειριστής συστήματος και υπηρεσίας για Linux. Για τη διατήρηση της εγκατάστασης Arch Linux, είναι καλή ιδέα να μάθετε τα βασικά σχετικά με αυτό. Η αλληλεπίδραση με το "systemd" γίνεται μέσω της εντολής '' systemctl ''. Διαβάστε [[systemd # Basic systemctl use]] για περισσότερες πληροφορίες.
+Το Arch Linux χρησιμοποιεί το [[systemd]] ως διαχείρηση [[init]], το οποίο είναι ένας διαχειριστής συστήματος και υπηρεσίας για Linux. Για τη διατήρηση της εγκατάστασης Arch Linux, είναι καλή ιδέα να μάθετε τα βασικά σχετικά με αυτό. Η αλληλεπίδραση με το "systemd" γίνεται μέσω της εντολής '' systemctl ''. Διαβάστε [[systemd # Basic systemctl use]] για περισσότερες πληροφορίες.
 
 
-=== System maintenance ===
+=== Συντήρηση συστήματος ===
 
-Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [[system maintenance]]. Read [[Security]] for recommendations and best practices on hardening the system.
+Το Arch είναι ένα rolling release σύστημα και έχει γρήγορο κύκλο πακέτων, οπότε οι χρήστες πρέπει να αφιερώσουν λίγο χρόνο για να κάνουν [[συντήρηση συστήματος]]. Διαβάστε [[Ασφάλεια]] για προτάσεις και βέλτιστες πρακτικές για την περαιτέρω ασφάλεια του συστήματος.
 
-== Package management ==
 
-This section contains helpful information related to package management. See [[FAQ#Package management]] and [[:Category:Package management]] for more.
+== Διαχείρηση πακέτων ==
 
-{{Note|It is imperative to keep up to date with changes in Arch Linux that require manual intervention '''before''' upgrading your system. Subscribe to the [https://mailman.archlinux.org/mailman/listinfo/arch-announce/ arch-announce mailing list] or the [https://archlinux.org/feeds/news/ recent news RSS feed]. Alternatively, check the front page [https://archlinux.org/ Arch news] every time before you update.}}
+Αυτή η ενότητα περιέχει χρήσιμες πληροφορίες σχετικά με τη διαχείριση πακέτων. Ανατρέξτε στο [[FAQ#Διαχείριση πακέτων]] και [[:Κατηγορία:Διαχείριση πακέτων]] για περισσότερα.
+
+
+{{Σημείωση|Είναι επιτακτική ανάγκη να ενημερώνεστε για τις αλλαγές στο Arch Linux που απαιτούν χειροκίνητη παρέμβαση πριν από την αναβάθμιση του συστήματός σας. Εγγραφείτε στη [https://mailman.archlinux.org/mailman/listinfo/arch-announce/ arch-mengumumkan λίστα αλληλογραφίας] ή στη [https://archlinux.org/feeds/news/ πρόσφατη ροή ειδήσεων RSS]. Εναλλακτικά, ελέγχετε την πρώτη σελίδα [https://archlinux.org/ Arch news] κάθε φορά πριν ενημέρωσετε το συστημα σας.}}
 
 === pacman ===
 
-[[pacman]] is the Arch Linux ''pac''kage ''man''ager: all users are required to become familiar with it before reading any other articles.
+Το [[pacman]] είναι ο ο διαχειρηστής πακέτων του Arch Linux : όλοι οι χρήστες πρέπει να εξοικειωθούν με αυτό πριν διαβάσουν άλλα άρθρα.
 
-See [[pacman/Tips and tricks]] for suggestions on how to improve your interaction with ''pacman'' and package management in general.
+Ανατρέξτε στο [[pacman/Συμβουλές και κόλπα]] για προτάσεις σχετικά με τον τρόπο βελτίωσης της αλληλεπίδρασής σας με το "pacman" και τη διαχείριση πακέτων γενικά.
 
-=== Repositories ===
+=== Αποθετήρια (Repositories) ===
 
-See the [[Official repositories]] article for details about the purpose of each officially maintained repository.
+Ανατρέξτε στο άρθρο [[Επίσημα αποθετήρια]] για λεπτομέρειες σχετικά με τον σκοπό κάθε επίσημου αποθετηρίου.
 
-If you plan on using 32-bit applications, you will want to enable the [[multilib]] repository.
+Εάν σκοπεύετε να χρησιμοποιήσετε εφαρμογές 32-bit, θα θελήσετε να ενεργοποιήσετε το αποθετήριο [[multilib]].
 
-The [[Unofficial user repositories]] article lists several other unsupported repositories.
+Το άρθρο [[ανεπίσημα αποθετήρια χρηστών]] παραθέτει πολλά άλλα μη υποστηριζόμενα αποθετήρια.
 
-You may consider installing the [[pkgstats]] service.
+Μπορείτε να εγκαταστήσετε την υπηρεσία [[pkgstats]].
 
 === Mirrors ===
 
-Visit the [[Mirrors]] article for steps on taking full advantage of using the fastest and most up to date mirrors of the official repositories. As explained in the article, a particularly good advice is to routinely check the [https://archlinux.org/mirrors/status/ Mirror Status] page for a list of mirrors that have been recently synced.
+Επισκεφτείτε το άρθρο [[Mirrors]] για βήματα σχετικά με την πλήρη αξιοποίηση των ταχύτερων και πιο ενημερωμένων mirrors των επίσημων αποθετηρίων. Όπως εξηγείται στο άρθρο, μια ιδιαίτερα καλή συμβουλή είναι να ελέγχετε τακτικά τη σελίδα [https://archlinux.org/mirrors/status/Mirror Status] για μια λίστα με καθρέφτες που έχουν πρόσφατα συγχρονιστεί.
 
 === Arch Build System ===
 
